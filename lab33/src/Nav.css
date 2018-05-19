@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.navContainer{
+  height: 50px;
+  width: 100%;
+  font-family: 'Open Sans';
+}
+.loginBtnFix{
+  margin-bottom: 26px;
+}
+
+.userNameStl{
+  margin: 0 5px 0 0;
+  font-family: 'Open Sans';
+  color: #2c2c2c;
+}
+
+form{
+  margin-right: 10px;
+}
+
+.userNameStl:hover{
+  cursor: pointer;
+}
