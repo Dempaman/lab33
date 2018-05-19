@@ -1,0 +1,47 @@
+.shopContainer{
+  display: flex;
+  height: 800px;
+  background: #e4e4f0;
+}
+
+.shopWrap{
+  text-align: center;
+  background-color: #dbdbdb;
+  flex-grow: 1;
+}
+
+.rightSideWrap{
+  text-align: center;
+  background-color: lightblue;
+  flex-grow: 0.3;
+}
+
+.productImg{
+  width: 200px;
+}
+
+.shopRenderContainer{
+  margin: 20px;
+}
+
+.shopItems{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.kronorTxt{
+  font-family: Arial;
+  font-weight: bold;
+  margin: 30px 0 5px 0;
+}
+
+.stockTxt{
+  font-family: Arial;
+}
+
+.infoTxt{
+  font-family: Arial;
+  margin: 10px 0 10px 0;
+
+}

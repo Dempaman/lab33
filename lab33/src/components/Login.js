@@ -11,7 +11,6 @@ class Login extends Component {
       loggedInUserId: '',
       name: '',
       profileImg: '',
-      userScore: '',
       userEmail: '',
       AllUsers: [],
       loggedInUser: [],
@@ -55,7 +54,6 @@ class Login extends Component {
         firebase.database().ref('users/'+ this.state.user.uid).set({
           'name': this.state.user.displayName,
           'img': this.state.user.photoURL,
-          'score': 0,
           'uniqueID': this.state.user.uid,
           'email': this.state.user.email,
         });
@@ -97,6 +95,8 @@ class Login extends Component {
       this.setState({userScore: findUser.score})
       }.bind(this));
   }
+
+  
 
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
