@@ -8,9 +8,10 @@ import {createStore} from 'redux';
 import rootReducer from './reducers/reducers.js'
 
 const initialState = {
+	cartItems:[],
 	items: {
 		fetchState: 0,
-		itemsData: null
+		itemsData: null,
 	}
 };
 

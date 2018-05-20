@@ -18,4 +18,11 @@ let actionFetchGotData = data => {
   };
 }
 
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData};
+let actionAddItem = name => {
+  return {
+    type: 'ADD_ITEM',
+    name: name
+  };
+}
+
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem};

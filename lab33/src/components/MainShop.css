@@ -1,7 +1,8 @@
 .shopContainer{
   display: flex;
-  height: 800px;
+  height: 500px;
   background: #e4e4f0;
+
 }
 
 .shopWrap{
@@ -43,5 +44,10 @@
 .infoTxt{
   font-family: Arial;
   margin: 10px 0 10px 0;
+}
 
+.cartInfoDiv{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 40px;
 }
