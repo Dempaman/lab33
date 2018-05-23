@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
+import Cart from './Cart.js';
 import {connect} from 'react-redux';
 import firebase from './firebase.js';
 import './MainShop.css'
@@ -12,7 +13,13 @@ class MainShop extends Component{
         this.fetchItemData();
       }.bind(this))
   }
+    hover(e){
+      this.setState({isHover: true})
+    }
 
+    leaveHover(){
+      this.setState({isHover: false})
+    }
     render(){
       let content;
   		if( this.props.fetchState === LOADING ) {
@@ -21,45 +28,37 @@ class MainShop extends Component{
   			content = <div>No data.</div>;
   		} else {
   			const dataList = this.props.data.map( x => (
-  				<div className="shopRenderContainer" key={x.itemName}>
+  				<div onMouseEnter={this.hover}
+              onMouseLeave={this.leaveHover}
+              className="shopRenderContainer" key={x.itemName}>
             <div><img className="productImg" src={x.productImg} alt="Not found"/></div>
-            <div>{x.itemName}</div>
-            <div className="infoTxt">{x.info}</div>
-            <div className="stockTxt">{x.stock} st i lager</div>
-            <div className="kronorTxt">{x.price} kr</div>
-            <button onClick={() => this.addItemToCart(x.itemName)}>Köp</button>
+            <div className="itemName">{x.itemName}</div>
+
+            {/* <div className="infoTxt">{x.info}</div>  */}
+            {/*  <div className="stockTxt">{x.stock} st i lager</div>  */}
+            <div className="kronorTxt">{x.price}kr</div>
+            <div className="blurImg"></div>
+            <button onClick={() => this.addItemToCart(x.itemName)}>BUY NOW</button>
+            {/* <button onClick={() => this.addItemToCart(x.itemName)}>Köp</button> */}
+
           </div>
   			));
   			content = <div className="shopItems"> {dataList} </div>;
   		}
 
-      let contentCart;
-      if(!this.props.cart){
-        contentCart = <div>No items in the cart..</div>
-      }else{
-        const cartList = this.props.cart.map( y => (
-
-            <div className="cartInfoDiv" key={y.itemName}>
-              <div>{y.itemName}</div>
-              <div>{y.info}</div>
-              <div>{y.price} kr</div>
-            </div>
-          ));
-          contentCart = <div > {cartList} </div>
-
-      }
 
     return(
-      <div>
-        <div className="shopContainer">
+      <div className="shopContainer">
+        {/*<button onClick={this.handleClickFetchData}>Hämta data</button>*/}
+
           <div className="shopWrap">
-            <div >{content}</div>
+            {content}
           </div>
-        </div>
-        <div className="rightSideWrap">{contentCart}</div>
+
       </div>
     )
   }
+
   //Hämtar hem all data från firebase och lägger in dom i state
   fetchItemData(){
     this.props.dispatch(actionItemFetchData());
@@ -107,12 +106,13 @@ class MainShop extends Component{
 
 }
 
+
+
 let mapStateToProps = state => {
   return {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
-    cart: state.cartItems,
-    quantity: state.quantity
+    cart: state.cartItems
   }
 }
 
