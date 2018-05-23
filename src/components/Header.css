@@ -1,0 +1,26 @@
+.containerHeader{
+  height: 700px;
+  width: 100%;
+  background-color: grey;
+}
+
+.containerHeader img{
+  height: 700px;
+  width: 100%;
+  object-fit: cover;
+
+}
+
+
+.containerHeader button{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.showCartButton{
+  z-index: 10;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+}
