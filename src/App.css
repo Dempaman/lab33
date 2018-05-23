@@ -26,3 +26,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.positionContainerCart{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

@@ -1,14 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
 .shopContainer{
   display: flex;
-  height: 500px;
-  background: #e4e4f0;
+  justify-content: center;
+  width: 100%;
+  /*background: #e4e4f0;*/
 
 }
 
 .shopWrap{
-  text-align: center;
-  background-color: #dbdbdb;
-  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  /*background-color: #dbdbdb;*/
+
+  width: 1200px;
 }
 
 .rightSideWrap{
@@ -18,26 +24,72 @@
 }
 
 .productImg{
-  width: 200px;
+  width: 350px;
+
 }
 
 .shopRenderContainer{
+  position: relative;
+  text-align: center;
   margin: 20px;
-  border: 1px solid #fff;
   border-radius: 4px;
-  padding: 10px 10px 15px 10px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat', arial;
+  flex-direction: column;
+}
+
+.shopRenderContainer:hover button{
+  display: block;
+}
+
+.shopRenderContainer:hover .blurImg{
+  background-color: #2e2d2d70;
+}
+
+.blurImg{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.shopRenderContainer button{
+  color: white;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0.5px solid white;
+  padding: 10px 30px;
+  background-color: #2e2d2d70;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
 }
 
 .shopItems{
+  width: 100%;
+  margin-top: 50px;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
-
+.itemName{
+  padding: 0 0 5px 0;
+  width: 150px;
+  border-bottom: 0.5px solid #b9b9b9;
+}
 .kronorTxt{
   font-family: Arial;
-  font-weight: bold;
-  margin: 30px 0 5px 0;
+  font-size: 13px;
+  color: #4d4c4c;
+  letter-spacing: 0.5px;
+  padding: 0 0 5px 0;
+  margin: 5px 0 0 0;
 }
 
 .stockTxt{
@@ -47,10 +99,4 @@
 .infoTxt{
   font-family: Arial;
   margin: 10px 0 10px 0;
-}
-
-.cartInfoDiv{
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 40px;
 }

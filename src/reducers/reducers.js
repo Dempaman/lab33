@@ -34,9 +34,22 @@ let addItemReducer = (state=[], action) => {
     }
 }
 
+let showCartReducer = (state={showCart: false}, action) => {
+  switch( action.type ) {
+    case 'SHOW_CART':
+      return {
+        ...state,
+        showCart: action.bool
+      };
+    default:
+      return state;
+  }
+}
+
 let rootReducer = combineReducers({
   items: itemsReducer,
-  cartItems: addItemReducer
+  cartItems: addItemReducer,
+  showCart: showCartReducer
 })
 
 export default rootReducer;

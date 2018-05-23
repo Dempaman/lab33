@@ -25,4 +25,11 @@ let actionAddItem = name => {
   };
 }
 
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem};
+let actionDisplayCart = bool => {
+  return{
+    type: 'SHOW_CART',
+    showCart: bool
+  }
+}
+
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart};

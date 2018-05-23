@@ -2,7 +2,7 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
 
 PATH: 
-  C:\Users\demio\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\demio\bin;C:\Program Files (x86)\Cuminas\Document Express DjVu Plug-in;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Skype\Phone;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Program Files\nodejs;C:\Users\demio\AppData\Local\Microsoft\WindowsApps;C:\Users\demio\AppData\Local\GitHubDesktop\bin;C:\Users\demio\AppData\Local\atom\bin;C:\Users\demio\AppData\Local\Microsoft\WindowsApps;C:\Users\demio\AppData\Local\Programs\Python\Python36;C:\Users\demio\AppData\Local\Yarn\bin;C:\Users\demio\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\oskar\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\oskar\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Users\oskar\AppData\Local\Programs\Python\Python37\Scripts;C:\Users\oskar\AppData\Local\Programs\Python\Python37;C:\Users\oskar\AppData\Local\Microsoft\WindowsApps;C:\Users\oskar\AppData\Local\atom\bin;C:\Users\oskar\AppData\Local\GitHubDesktop\bin;C:\Users\oskar\AppData\Local\Microsoft\WindowsApps;C:\Users\oskar\AppData\Roaming\npm;C:\Users\oskar\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.5.1
@@ -21,6 +21,7 @@ npm manifest:
     "dependencies": {
       "react": "^16.3.2",
       "react-dom": "^16.3.2",
+      "react-icons": "^2.2.7",
       "react-redux": "^5.0.7",
       "react-scripts": "1.1.4",
       "redux": "^4.0.0"
@@ -7471,10 +7472,10 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 3221225786
+  Exit code: 1
   Command: C:\WINDOWS\system32\cmd.exe
   Arguments: /d /s /c react-scripts start
-  Directory: C:\Users\demio\Desktop\FEU17\Javascript 3\React\lab33\lab33
+  Directory: C:\Users\oskar\Documents\Skola uppgift\lab33
   Output:
   
       at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
