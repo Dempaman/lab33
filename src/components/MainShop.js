@@ -6,7 +6,6 @@ import firebase from './firebase.js';
 import './MainShop.css'
 
 class MainShop extends Component{
-
   componentDidMount(){
     this.fetchItemData();
     firebase.database().ref('/items/').on('child_changed',function(snapshot) {
@@ -39,18 +38,19 @@ class MainShop extends Component{
         contentCart = <div>No items in the cart..</div>
       }else{
         const cartList = this.props.cart.map( y => (
+
             <div className="cartInfoDiv" key={y.itemName}>
               <div>{y.itemName}</div>
               <div>{y.info}</div>
               <div>{y.price} kr</div>
             </div>
-        ));
-        contentCart = <div > {cartList} </div>
+          ));
+          contentCart = <div > {cartList} </div>
+
       }
 
     return(
       <div>
-        {/*<button onClick={this.handleClickFetchData}>Hämta data</button>*/}
         <div className="shopContainer">
           <div className="shopWrap">
             <div >{content}</div>
@@ -85,8 +85,7 @@ class MainShop extends Component{
         items.push(child.val());
       });
       this.props.dispatch(actionFetchGotData(items));
-      let find = this.props.dispatch(actionFetchGotData(items)).data.find(item => item.itemName === `${itemId}` );
-      //console.log(find)
+      let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
         firebase.database().ref('items/' + find.id).update({
           'stock': find.stock - 1
@@ -94,11 +93,15 @@ class MainShop extends Component{
       }else{
         console.log("Finns inga fler varor av denna sort")
       }
-
       let action = actionAddItem(find);
-      this.props.dispatch(action);
-      //console.log(this.props.cart)
-    }.bind(this))
+      if (this.props.cart.filter(e => e.itemName === find.itemName).length > 0) {
+        console.log("finns redan i listan")
+        // HÄR SKA VI GÖRA EN COUNTER FÖR VARJE PRODUKT HUR MÅNGA VI VILL KÖPA
+      }else{
+        this.props.dispatch(action);
+      }
+
+    }.bind(this));
 
   }
 
@@ -108,7 +111,8 @@ let mapStateToProps = state => {
   return {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
-    cart: state.cartItems
+    cart: state.cartItems,
+    quantity: state.quantity
   }
 }
 
