@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem} from '../actions/actions.js';
+import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionUpdateQuantity} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
-import Cart from './Cart.js';
 import {connect} from 'react-redux';
 import firebase from './firebase.js';
 import './MainShop.css'
@@ -13,13 +12,7 @@ class MainShop extends Component{
         this.fetchItemData();
       }.bind(this))
   }
-    hover(e){
-      this.setState({isHover: true})
-    }
 
-    leaveHover(){
-      this.setState({isHover: false})
-    }
     render(){
       let content;
   		if( this.props.fetchState === LOADING ) {
@@ -27,10 +20,10 @@ class MainShop extends Component{
   		} else if( this.props.fetchState === NO_DATA ) {
   			content = <div>No data.</div>;
   		} else {
-  			const dataList = this.props.data.map( x => (
+  			const dataList = this.props.data.map( (x, i) => (
   				<div onMouseEnter={this.hover}
               onMouseLeave={this.leaveHover}
-              className="shopRenderContainer" key={x.itemName}>
+              className="shopRenderContainer" key={i} i={i}>
             <div><img className="productImg" src={x.productImg} alt="Not found"/></div>
             <div className="itemName">{x.itemName}</div>
 
@@ -38,7 +31,7 @@ class MainShop extends Component{
             {/*  <div className="stockTxt">{x.stock} st i lager</div>  */}
             <div className="kronorTxt">{x.price}kr</div>
             <div className="blurImg"></div>
-            <button onClick={() => this.addItemToCart(x.itemName)}>BUY NOW</button>
+            <button onClick={() => this.addItemToCart(x.itemName, i)} i={i}>BUY NOW</button>
             {/* <button onClick={() => this.addItemToCart(x.itemName)}>Köp</button> */}
 
           </div>
@@ -76,7 +69,7 @@ class MainShop extends Component{
     })
   }
 
-  addItemToCart(itemId){
+  addItemToCart(itemId, index){
     firebase.database().ref('/items/').once('value')
     .then(function(snapshot) {
       let items = [];
@@ -93,9 +86,14 @@ class MainShop extends Component{
         console.log("Finns inga fler varor av denna sort")
       }
       let action = actionAddItem(find);
-      if (this.props.cart.filter(e => e.itemName === find.itemName).length > 0) {
-        console.log("finns redan i listan")
-        // HÄR SKA VI GÖRA EN COUNTER FÖR VARJE PRODUKT HUR MÅNGA VI VILL KÖPA
+      let actionUpdate = actionUpdateQuantity(index, itemId);
+
+      if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
+        this.props.dispatch(actionUpdate)
+
+      //  console.log("finns redan i listan")
+      //  console.log(this.props.cart)
+
       }else{
         this.props.dispatch(action);
       }
@@ -105,7 +103,6 @@ class MainShop extends Component{
   }
 
 }
-
 
 
 let mapStateToProps = state => {

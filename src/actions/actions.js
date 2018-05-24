@@ -1,4 +1,4 @@
-import {NO_DATA, LOADING, LOADED, ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA} from './constants.js'
+import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY} from './constants.js'
 
 let actionItemFetchData = () => {
   return {
@@ -20,11 +20,19 @@ let actionFetchGotData = data => {
   };
 }
 
-let actionAddItem = name => {
+let actionAddItem = (name, quantity) => {
   return {
     type: ADD_ITEM,
     name: name,
-    quantity: 0
+    quantity: 1
+  };
+}
+
+let actionUpdateQuantity = (index, itemId) => {
+  return {
+    type: UPDATE_QUANTITY,
+    index: index,
+    itemId: itemId
   };
 }
 
@@ -35,4 +43,4 @@ let actionDisplayCart = bool => {
   }
 }
 
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart};
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart, actionUpdateQuantity};

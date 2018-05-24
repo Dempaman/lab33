@@ -8,10 +8,11 @@ class Cart extends Component {
       if(!this.props.cart){
         contentCart = <div>No items in the cart..</div>
       }else{
-        const cartList = this.props.cart.map( y => (
-            <div className="cartInfoDiv" key={y.itemName}>
-              <div>{y.itemName}</div>
-              <div>{y.price} kr</div>
+        const cartList = this.props.cart.map( (y, i) => (
+            <div className="cartInfoDiv" key={i} i={i}>
+              <div>{y.cart.itemName}</div>
+              <div>{y.cart.price} kr</div>
+              <div>{y.quantity} st</div>
             </div>
         ));
         contentCart = <div className="cartHolder"> {cartList} </div>

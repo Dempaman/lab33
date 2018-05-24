@@ -24,10 +24,27 @@ let itemsReducer = (state={fetchState: NO_DATA, itemsData: null }, action) =>{
   }
 }
 
-let addItemReducer = (state=[], action) => {
+let addItemReducer = (state=[{cart: null, quantity: 0}], action) => {
   switch( action.type ) {
     case 'ADD_ITEM':
-      return [...state, action.name];
+      return[
+        ...state,
+          {
+            cart: action.name,
+            quantity:action.quantity
+          }
+    ];
+
+    case 'UPDATE_QUANTITY':
+      return state.map( (item, index) => {
+          if(item.cart.itemName !== action.itemId) {
+              return item;
+          }
+          return {
+              ...item, quantity: item.quantity + 1,
+              ...action.item
+          };
+      });
 
       default:
         return state;

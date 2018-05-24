@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import MdShoppingCart from 'react-icons/lib/md/shopping-cart';
 import MdClose from 'react-icons/lib/md/close';
 import {actionDisplayCart} from '../actions/actions.js';
