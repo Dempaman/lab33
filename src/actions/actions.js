@@ -1,4 +1,4 @@
-import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY} from './constants.js'
+import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, ADD_SUM} from './constants.js'
 
 let actionItemFetchData = () => {
   return {
@@ -24,15 +24,23 @@ let actionAddItem = (name, quantity) => {
   return {
     type: ADD_ITEM,
     name: name,
-    quantity: 1
+    quantity: 1,
   };
 }
 
-let actionUpdateQuantity = (index, itemId) => {
+let actionTotalSum = (sum) => {
+  return {
+    type: ADD_SUM,
+    sum: sum
+  }
+}
+
+let actionUpdateQuantity = (index, itemId, amount) => {
   return {
     type: UPDATE_QUANTITY,
     index: index,
-    itemId: itemId
+    itemId: itemId,
+    amount: amount
   };
 }
 
@@ -43,4 +51,4 @@ let actionDisplayCart = bool => {
   }
 }
 
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart, actionUpdateQuantity};
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart, actionUpdateQuantity, actionTotalSum};

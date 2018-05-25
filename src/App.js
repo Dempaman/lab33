@@ -38,8 +38,6 @@ class App extends Component {
           displayCart={this.displayCart}
           showCart={this.state.showCart}
            />
-
-
         <MainShop />
       </div>
     );

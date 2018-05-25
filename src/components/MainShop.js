@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionUpdateQuantity} from '../actions/actions.js';
+import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionUpdateQuantity, actionTotalSum} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
 import {connect} from 'react-redux';
 import firebase from './firebase.js';
@@ -27,27 +27,20 @@ class MainShop extends Component{
             <div><img className="productImg" src={x.productImg} alt="Not found"/></div>
             <div className="itemName">{x.itemName}</div>
 
-            {/* <div className="infoTxt">{x.info}</div>  */}
-            {/*  <div className="stockTxt">{x.stock} st i lager</div>  */}
+            <div className="stockTxt">{x.stock} st i lager</div>
             <div className="kronorTxt">{x.price}kr</div>
             <div className="blurImg"></div>
             <button onClick={() => this.addItemToCart(x.itemName, i)} i={i}>BUY NOW</button>
-            {/* <button onClick={() => this.addItemToCart(x.itemName)}>Köp</button> */}
-
           </div>
   			));
   			content = <div className="shopItems"> {dataList} </div>;
   		}
 
-
     return(
       <div className="shopContainer">
-        {/*<button onClick={this.handleClickFetchData}>Hämta data</button>*/}
-
           <div className="shopWrap">
             {content}
           </div>
-
       </div>
     )
   }
@@ -86,20 +79,18 @@ class MainShop extends Component{
         console.log("Finns inga fler varor av denna sort")
       }
       let action = actionAddItem(find);
-      let actionUpdate = actionUpdateQuantity(index, itemId);
+      let actionUpdate = actionUpdateQuantity(index, itemId, 1);
+      let actionSum = actionTotalSum(find.price);
 
       if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
         this.props.dispatch(actionUpdate)
-
-      //  console.log("finns redan i listan")
-      //  console.log(this.props.cart)
-
+        console.log("varan finns redan i din cart")
       }else{
         this.props.dispatch(action);
       }
-
+      this.props.dispatch(actionSum);
+      console.log(this.props.sum)
     }.bind(this));
-
   }
 
 }
@@ -109,7 +100,8 @@ let mapStateToProps = state => {
   return {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
-    cart: state.cartItems
+    cart: state.cartItems,
+    sum: state.sum
   }
 }
 

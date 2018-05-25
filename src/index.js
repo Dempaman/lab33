@@ -8,6 +8,7 @@ import {Provider} from 'react-redux';
 import rootReducer from './reducers/reducers.js'
 
 const initialState = {
+	sum: 0,
 	cartItems:[],
 	items: {
 		fetchState: 0,

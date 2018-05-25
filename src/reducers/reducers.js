@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {NO_DATA, LOADING, LOADED} from '../actions/constants.js';
+import {NO_DATA, LOADING, LOADED, UPDATE_QUANTITY, ADD_ITEM, ADD_SUM} from '../actions/constants.js';
 
 let itemsReducer = (state={fetchState: NO_DATA, itemsData: null }, action) =>{
   switch(action.type){
@@ -26,22 +26,22 @@ let itemsReducer = (state={fetchState: NO_DATA, itemsData: null }, action) =>{
 
 let addItemReducer = (state=[{cart: null, quantity: 0}], action) => {
   switch( action.type ) {
-    case 'ADD_ITEM':
+    case ADD_ITEM:
       return[
         ...state,
           {
             cart: action.name,
-            quantity:action.quantity
+            quantity:action.quantity,
           }
     ];
 
-    case 'UPDATE_QUANTITY':
+    case UPDATE_QUANTITY:
       return state.map( (item, index) => {
           if(item.cart.itemName !== action.itemId) {
               return item;
           }
           return {
-              ...item, quantity: item.quantity + 1,
+              ...item, quantity: item.quantity + action.amount,
               ...action.item
           };
       });
@@ -49,6 +49,16 @@ let addItemReducer = (state=[{cart: null, quantity: 0}], action) => {
       default:
         return state;
     }
+}
+
+let totalSumReducer = (state = 0, action) =>{
+  switch ( action.type ) {
+    case ADD_SUM:
+      return state + action.sum;
+
+    default:
+  	   return state;
+  }
 }
 
 let showCartReducer = (state={showCart: false}, action) => {
@@ -66,7 +76,8 @@ let showCartReducer = (state={showCart: false}, action) => {
 let rootReducer = combineReducers({
   items: itemsReducer,
   cartItems: addItemReducer,
-  showCart: showCartReducer
+  showCart: showCartReducer,
+  sum: totalSumReducer
 })
 
 export default rootReducer;
