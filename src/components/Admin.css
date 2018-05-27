@@ -100,19 +100,24 @@
 
 .buttonRemoveEdit{
   font-family: 'Montserrat', sans-serif;
-  margin-left: auto;
-  margin-right: 10px;
+  margin-left: 5px;
+
   border: 0.5px solid black;
   padding: 5px 10px;
   outline: none;
   cursor: pointer;
   background-color: transparent;
 }
+.positionButtons{
+  margin-left: auto;
+}
+
 .buttonRemoveEdit:hover{
   background-color: #727272;
   color: white;
 }
 .itemNameEdit{
+  width: 200px;
   margin: 0 15px 0 15px;
 }
 

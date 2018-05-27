@@ -141,8 +141,10 @@ class Admin extends Component{
           <div className="itemNameEdit">{x.itemName}</div>
           <div className="kronorTxtEdit">{x.price}kr</div>
           <div className="blurImgEdit"></div>
+          <div className="positionButtons">
           <button className="buttonRemoveEdit" onClick={() => this.editItem(x.itemName)}>Edit</button>
           <button className="buttonRemoveEdit" onClick={() => this.removeItem(x.itemName)}>Remove</button>
+          </div>
           {/* <button onClick={() => this.addItemToCart(x.itemName)}>Köp</button> */}
 
         </div>

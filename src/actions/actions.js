@@ -59,11 +59,6 @@ let actionLogin = login =>{
   }
 }
 
-let actionAddUserToDb = info => {
-  return{
-
-  }
-}
 
 let actionDisplayCart = bool => {
   return{
