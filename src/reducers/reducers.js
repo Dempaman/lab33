@@ -34,13 +34,24 @@ let addItemReducer = (state=[], action) => {
     }
 }
 
-let showCartReducer = (state={showCart: false}, action) => {
+
+
+let historyReducer = (state=[], action) => {
   switch( action.type ) {
-    case 'SHOW_CART':
-      return {
-        ...state,
-        showCart: action.bool
-      };
+    case 'HISTORY_ADD':
+          return [...state, action.item];
+    default:
+      return state;
+  }
+}
+
+let loginReducer = (state={user: null}, action) => {
+  switch( action.type ) {
+    case 'LOGIN_USER':
+          return {
+            ...state,
+            user: action.login
+          }
     default:
       return state;
   }
@@ -49,7 +60,8 @@ let showCartReducer = (state={showCart: false}, action) => {
 let rootReducer = combineReducers({
   items: itemsReducer,
   cartItems: addItemReducer,
-  showCart: showCartReducer
+  history: historyReducer,
+  login: loginReducer
 })
 
 export default rootReducer;

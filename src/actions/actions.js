@@ -1,4 +1,4 @@
-import {NO_DATA, LOADING, LOADED, ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA} from './constants.js'
+import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA} from './constants.js'
 
 let actionItemFetchData = () => {
   return {
@@ -28,11 +28,25 @@ let actionAddItem = name => {
   };
 }
 
-let actionDisplayCart = bool => {
+
+let actionHistoryAdd = item =>{
   return{
-    type: 'SHOW_CART',
-    showCart: bool
+    type: 'HISTORY_ADD',
+    item: item
   }
 }
 
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart};
+let actionLogin = login =>{
+  return{
+    type: 'LOGIN_USER',
+    login: login
+  }
+}
+
+let actionAddUserToDb = info => {
+  return{
+
+  }
+}
+
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd, actionLogin};

@@ -9,6 +9,10 @@ import rootReducer from './reducers/reducers.js'
 
 const initialState = {
 	cartItems:[],
+	history:[],
+	login:{
+		user: null,
+	},
 	items: {
 		fetchState: 0,
 		itemsData: null,

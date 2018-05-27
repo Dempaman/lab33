@@ -1,44 +1,23 @@
-.containerLoggedIn{
-  -webkit-box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
-  -moz-box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
-  box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
-  background-color: #f8f8f84d;
-  height: 75px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
 
-}
-
-.profileInfo{
-  margin-right: 15px;
-  height: 75px;
+.containerLogin{
+  width: 100%;
+  height: 150px;
   display: flex;
+  justify-content: center;
   align-items: center;
-}
-
-.profileInfo img{
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  object-fit: cover;
-  object-position: center;
-  margin: 0 8px 0 0;
+  background-color: #f7f7f7;
 }
 
 .buttonLog{
-  color: white;
-  outline: none;
-  margin: 0 10px 0 0;
-  border: none;
-  border-radius: 5px;
-  background-color: #1c82e2;
   width: 100px;
-  height: 30px;
-  font-family: 'Open Sans';
+  height: 25px;
+  outline: none;
+  background-color: transparent;
+  border: 0.5px solid black;
+  color: black;
+  cursor: pointer;
 }
 
-.alighItems{
-  display: flex;
-  align-items: center;
+.buttonLog:hover{
+  background-color: white;
 }

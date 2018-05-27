@@ -24,3 +24,10 @@
   right: 20px;
   top: 20px;
 }
+
+.showHistoryButton{
+  z-index: 10;
+  position: fixed;
+  left: 20px;
+  top: 20px;
+}

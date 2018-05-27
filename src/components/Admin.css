@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.containerAdmin{
+  position: relative;
+
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formAddProduct{
+  width: 50%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.containerAdmin input{
+  font-family: 'Montserrat', sans-serif;
+  width: 70%;
+  height: 25px;
+  margin-top: 10px;
+  outline: none;
+  border: 0.5px solid black;
+  padding: 0 0 0 5px;
+}
+
+.addButton{
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 10px;
+  width: 71%;
+  height: 25px;
+  padding: 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: #f0dcdc;
+}
+.addButton:hover{
+  background-color: #727272;
+  color: white;
+}
+
+.containerAdmin h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.containerAdded{
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 35px;
+  background-color: #05ca05;
+}
+
+.editItems{
+  font-family: 'Montserrat', sans-serif;
+  border: 0.5px solid lightgray;
+  margin: 50px;
+  width: 50%;
+  height: 300px;
+  background-color: gren;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+}
+
+.editContainer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: ble;
+  width: 95%;
+  height: 50px;
+  margin: 10px 0 0 0;
+}
+
+.editContainer img{
+  margin: 0 0 0 0px;
+  width: 55px;
+  height: 55px;
+}
+.editContainer:hover{
+  background-color: #f7f7f7;
+}
+
+.buttonRemoveEdit{
+  font-family: 'Montserrat', sans-serif;
+  margin-left: auto;
+  margin-right: 10px;
+  border: 0.5px solid black;
+  padding: 5px 10px;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+.buttonRemoveEdit:hover{
+  background-color: #727272;
+  color: white;
+}
+.itemNameEdit{
+  margin: 0 15px 0 15px;
+}
+
+.updateButton{
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 10px;
+  width: 71%;
+  height: 25px;
+  padding: 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: #f0dcdc;
+}
+.updateButton:hover{
+  background-color: #727272;
+  color: white;
+}
+
+.editItemContainer{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: fixed;
+  top: 300px;
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  -webkit-box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
+  -moz-box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
+  box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
+}
+.editItemContainer form{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+.buttonCloseEdit{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

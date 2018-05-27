@@ -55,7 +55,7 @@
   background-color: transparent;
 }
 
-.shopRenderContainer button{
+.buttonBuy{
   color: white;
   display: none;
   position: absolute;
@@ -69,7 +69,19 @@
   cursor: pointer;
   outline: none;
 }
-
+.buttonRemove{
+  color: white;
+  display: none;
+  position: absolute;
+  top: 20px;
+  transform: translate(-50%, -50%);
+  border: 0.5px solid white;
+  padding: 10px 30px;
+  background-color: #2e2d2d70;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+}
 .shopItems{
   width: 100%;
   margin-top: 50px;

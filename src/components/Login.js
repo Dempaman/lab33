@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Nav from './Nav.js';
+
+import {actionLogin} from '../actions/actions.js';
+import {connect} from 'react-redux';
 import firebase, { auth, provider } from './firebase.js';
 import './Login.css';
 
 class Login extends Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
     this.state = {
-      user: null,
       loggedInUserId: '',
       name: '',
       profileImg: '',
@@ -19,14 +20,12 @@ class Login extends Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
 
-  }
+  }*/
 
   logout() {
     auth.signOut()
     .then(() => {
-      this.setState({
-        user: null
-      });
+      this.props.dispatch(actionLogin(null));
     });
   }
   //Google Login
@@ -34,13 +33,13 @@ class Login extends Component {
     auth.signInWithPopup(provider)
     .then((result) => {
       const user = result.user;
-      this.setState({user});
-      this.addUserInfoToFirebase();
-      this.addAvatarsToState();
+      this.props.dispatch(actionLogin(user));
+      //this.setState({user});
+      //this.addUserInfoToFirebase();
     });
   }
 
-  addUserInfoToFirebase(uidUser){
+  /**addUserInfoToFirebase(uidUser){
     firebase.database().ref().child('/users/').once('value').then(function(snapshot) {
       let listt = [];
       snapshot.forEach(function(child) {
@@ -59,9 +58,9 @@ class Login extends Component {
         });
       }
     }.bind(this));
-  }
+  }**/
 
-  addUserInfoToState(){
+  /**addUserInfoToState(){
     firebase.database().ref('/users/').once('value').then(function(snapshot) {
       let users = [];
       snapshot.forEach(function(child) {
@@ -69,61 +68,13 @@ class Login extends Component {
       });
       this.setState({AllUsers: users});
       }.bind(this));
-  }
+  }**/
 
-  addAvatarsToState(){
-    firebase.database().ref('/avatar/').once('value').then(function(snapshot) {
-      let avatar = [];
-      snapshot.forEach(function(child) {
-        avatar.push(child.val());
-      });
-      this.setState({avatars: avatar});
-      }.bind(this));
-  }
-
-  updateLoggedInUserInfo(){
-    firebase.database().ref('/users/').once('value').then(function(snapshot) {
-      let user = [];
-      snapshot.forEach(function(child) {
-        user.push(child.val());
-      });
-      let findUser = user.find(item => item.uniqueID === this.state.loggedInUserId );
-
-      this.setState({loggedInUser: user});
-      this.setState({name: findUser.name });
-      this.setState({profileImg: findUser.img})
-      this.setState({userScore: findUser.score})
-      }.bind(this));
-  }
-
-  
 
   componentDidMount() {
-    auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ user });
-        this.setState({loggedInUserId: this.state.user.uid })
-        this.addAvatarsToState();
-        this.addUserInfoToState(); //Add the user names and scores in state
-
-        firebase.database().ref().child('/users/' + this.state.user.uid).once('value').then(function(snapshot) {  //Takes a snapshot of the database and prints the username if there is someone logged in
-          let snap = snapshot.val()
-          if(snap){
-            this.setState({name: snap.name})
-            this.setState({profileImg: snap.img})
-            this.setState({userScore: snap.score})
-            this.setState({userEmail: snap.email})
-            //setTimeout(this.setState({hide: 'hide'}),2000);
-          }
-        }.bind(this));
-
-        firebase.database().ref('/users/' + this.state.loggedInUserId).on('child_changed',(snapshot) => {//Takes a snapshot of the database if triggered and changes your profile name on the website
-         this.updateLoggedInUserInfo()
-        })
-
-       firebase.database().ref('/users/').on('child_changed',function(snapshot) { //Listens to the databes and changes the web-data
-           this.addUserInfoToState()
-         }.bind(this))
+        this.props.dispatch(actionLogin(user));
       }
     });
   }
@@ -133,28 +84,22 @@ class Login extends Component {
 
     return (
       <div>
-
-        <div className="containerLoggedIn">
-          {this.state.user ?
-            <div>
-              <Nav
-                passUserId={this.state.loggedInUserId}
-                src={this.state.profileImg}
-                onClick={this.logout}>
-                {this.state.name}
-              </Nav>
-              <div className={this.state.hide}>
-              </div>
-            </div>
-          :
-            <div className="alighItems">
-              <button className="buttonLog" onClick={this.login}>Log In</button>
-            </div>
+      <div className="containerLogin">
+          {this.props.user ?
+            <button onClick={() => this.logout()}className="buttonLog">SIGN OUT</button>
+            :
+            <button className="buttonLog" onClick={() => this.login()}>SIGN IN</button>
           }
-        </div>
+          </div>
       </div>
     );
   }
 }
 
-export default Login;
+let mapStateToProps = state => {
+  return {
+    user: state.login.user
+  }
+}
+
+export default connect(mapStateToProps)(Login);
