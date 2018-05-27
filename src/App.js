@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import Login from './components/Login.js';
 import MainShop from './components/MainShop.js';
 import HeaderMain from './components/Header.js';
 import Cart from './components/Cart.js';

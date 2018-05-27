@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd} from '../actions/actions.js';
+import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd, actionUpdateQuantity, actionTotalSum} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
 import {connect} from 'react-redux';
 import firebase from './firebase.js';
@@ -20,27 +20,24 @@ class MainShop extends Component{
   		} else if( this.props.fetchState === NO_DATA ) {
   			content = <div>No data.</div>;
   		} else {
-  			const dataList = this.props.data.map( x => (
-  				<div className="shopRenderContainer" key={x.itemName}>
+  			const dataList = this.props.data.map( (x, i) => (
+  				<div className="shopRenderContainer" key={i} i={i}>
             <div><img className="productImg" src={x.productImg} alt="Not found"/></div>
             <div className="itemName">{x.itemName}</div>
+            <div className="stockTxt">{x.stock} st i lager</div> {/*??*/}
             <div className="kronorTxt">{x.price}kr</div>
             <div className="blurImg"></div>
-            <button className="buttonBuy" onClick={() => this.addItemToCart(x.itemName)}>BUY NOW</button>
+            <button onClick={() => this.addItemToCart(x.itemName, i)} i={i}>BUY NOW</button>
           </div>
   			));
   			content = <div className="shopItems"> {dataList} </div>;
   		}
 
-
     return(
       <div className="shopContainer">
-        {/*<button onClick={this.handleClickFetchData}>Hämta data</button>*/}
-
           <div className="shopWrap">
             {content}
           </div>
-
       </div>
     )
   }
@@ -71,7 +68,7 @@ class MainShop extends Component{
     })
   }
 
-  addItemToCart(itemId){
+  addItemToCart(itemId, index){
     firebase.database().ref('/items/').once('value')
     .then(function(snapshot) {
       let items = [];
@@ -83,39 +80,42 @@ class MainShop extends Component{
       this.props.dispatch(actionHistoryAdd(actionFetch.type));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
-        firebase.database().ref('items/' + find.id).update({
+        firebase.database().ref('items/' + find.itemName).update({
           'stock': find.stock - 1
         });
       }else{
         console.log("Finns inga fler varor av denna sort")
       }
       let action = actionAddItem(find);
+
+      let actionUpdate = actionUpdateQuantity(index, itemId, 1);
+      let actionSum = actionTotalSum(find.price);
       let historyItem = action.type;
       let actionHistory = actionHistoryAdd(historyItem);
       console.log(action.name.itemName);
-      if (this.props.cart.filter(e => e.itemName === find.itemName).length > 0) {
-        console.log("finns redan i listan")
-        // HÄR SKA VI GÖRA EN COUNTER FÖR VARJE PRODUKT HUR MÅNGA VI VILL KÖPA
+      if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
+        this.props.dispatch(actionUpdate)
+        console.log("varan finns redan i din cart")
       }else{
         this.props.dispatch(action);
         this.props.dispatch(actionHistory);
       }
+        this.props.dispatch(actionSum);
 
     }.bind(this));
-
   }
 
 }
-
 
 
 let mapStateToProps = state => {
   return {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
-    cart: state.cartItems,
     history: state.history,
-    user: state.login.user
+    user: state.login.user,
+    cart: state.cartItems.present,
+    sum: state.sum.present
   }
 }
 

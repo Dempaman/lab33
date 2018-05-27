@@ -1,4 +1,4 @@
-import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA} from './constants.js'
+import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, ADD_SUM, UNDO_ITEM, UNDO_SUM} from './constants.js'
 
 let actionItemFetchData = () => {
   return {
@@ -20,11 +20,27 @@ let actionFetchGotData = data => {
   };
 }
 
-let actionAddItem = name => {
+let actionAddItem = (name, quantity) => {
   return {
     type: ADD_ITEM,
     name: name,
-    quantity: 0
+    quantity: 1,
+  };
+}
+
+let actionTotalSum = (sum) => {
+  return {
+    type: ADD_SUM,
+    sum: sum
+  };
+}
+
+let actionUpdateQuantity = (index, itemId, amount) => {
+  return {
+    type: UPDATE_QUANTITY,
+    index: index,
+    itemId: itemId,
+    amount: amount
   };
 }
 
@@ -49,4 +65,22 @@ let actionAddUserToDb = info => {
   }
 }
 
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd, actionLogin};
+let actionDisplayCart = bool => {
+  return{
+    type: 'SHOW_CART',
+    showCart: bool
+  };
+}
+
+let actionUndoItem = () => {
+  return{
+  type: UNDO_ITEM,
+  };
+}
+let actionUndoSum = () => {
+  return{
+  type: UNDO_SUM,
+  };
+}
+
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart, actionUpdateQuantity, actionTotalSum, actionUndoItem, actionUndoSum};

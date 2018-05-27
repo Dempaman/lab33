@@ -28,3 +28,12 @@
   flex-wrap: wrap;
 
 }
+
+.sumInfoDiv{
+  font-family: 'Montserrat', arial;
+  width: 250px;
+  display: flex;
+  text-align: right;
+  font-size: 0.8em;
+  justify-content: right;
+}

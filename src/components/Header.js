@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
 import MdShoppingCart from 'react-icons/lib/md/shopping-cart';
 import MdClose from 'react-icons/lib/md/close';
 import MdHistory from 'react-icons/lib/md/history';
-
 import './Header.css';
 
 
