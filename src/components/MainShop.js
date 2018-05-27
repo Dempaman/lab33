@@ -24,10 +24,10 @@ class MainShop extends Component{
   				<div className="shopRenderContainer" key={i} i={i}>
             <div><img className="productImg" src={x.productImg} alt="Not found"/></div>
             <div className="itemName">{x.itemName}</div>
-            <div className="stockTxt">{x.stock} st i lager</div> {/*??*/}
+            <div className="stockTxt">{x.stock}st i lager</div> {/*??*/}
             <div className="kronorTxt">{x.price}kr</div>
             <div className="blurImg"></div>
-            <button onClick={() => this.addItemToCart(x.itemName, i)} i={i}>BUY NOW</button>
+            <button className="buttonBuy"onClick={() => this.addItemToCart(x.itemName, i)} i={i}>BUY NOW</button>
           </div>
   			));
   			content = <div className="shopItems"> {dataList} </div>;

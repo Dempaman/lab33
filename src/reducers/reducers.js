@@ -125,7 +125,7 @@ let rootReducer = combineReducers({
   items: itemsReducer,
   cartItems: addItemReducer,
   history: historyReducer,
-  login: loginReducer
+  login: loginReducer,
   showCart: showCartReducer,
   sum: totalSumReducer
 

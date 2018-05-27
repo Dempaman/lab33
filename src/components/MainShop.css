@@ -44,6 +44,10 @@
   display: block;
 }
 
+.shopRenderContainer:hover .stockTxt{
+  display: block;
+}
+
 .shopRenderContainer:hover .blurImg{
   background-color: #2e2d2d70;
 }
@@ -105,7 +109,13 @@
 }
 
 .stockTxt{
-  font-family: Arial;
+
+  z-index: 10;
+  color: white;
+  position: absolute;
+  bottom: 150px;
+  display: none;
+  font-family: 'Montserrat', arial;
 }
 
 .infoTxt{

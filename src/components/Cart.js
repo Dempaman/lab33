@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {actionFetchGotData, actionAddItem, actionUpdateQuantity, actionTotalSum, actionUndoItem, actionUndoSum} from '../actions/actions.js';
 import firebase from './firebase.js';
 import './Cart.css';
+import MdUndo from 'react-icons/lib/md/undo';
 
 class Cart extends Component {
 
@@ -14,11 +15,13 @@ class Cart extends Component {
       }else{
         const cartList = this.props.cart.map( (y, i) => (
             <div className="cartInfoDiv" key={i} i={i}>
-              <div>{y.cart.itemName}</div>
-              <div>{y.cart.price} kr</div>
-              <div>{y.quantity} st</div>
-              <button onClick={() => this.addItemToCart(y.cart.itemName, i)} i={i}>+</button>
-              <button onClick={() => this.removeOneItemFromCart(y.cart.itemName, i)} i={i} disabled={y.quantity <= 1} >-</button>
+              <div className="itemNameDiv">
+                <div>{y.cart.itemName}</div>
+                <div>{y.cart.price} kr</div>
+              </div>
+              <button className="buttonCartItem" onClick={() => this.removeOneItemFromCart(y.cart.itemName, i)} i={i} disabled={y.quantity <= 1} >-</button>
+              <div className="quantityDiv">{y.quantity} st</div>
+              <button className="buttonCartItem" onClick={() => this.addItemToCart(y.cart.itemName, i)} i={i}>+</button>
             </div>
         ));
         contentCart = <div className="cartHolder"> {cartList} </div>
@@ -26,13 +29,13 @@ class Cart extends Component {
       if(this.props.sum === 0){
         contentSum = <div>Du har inga varor i kundvagnen</div>
       }else{
-        contentSum = <div>Totalt {this.props.sum}</div>
+        contentSum = <p>Totalt {this.props.sum}kr</p>
       }
 
 
     return(
       <div className="containerCart">
-        <button onClick={this.handleUndoItem} >Undo Item</button>
+        <button className="undoButton" onClick={this.handleUndoItem}><MdUndo size={25} /></button>
         <div>
           {contentCart}
         </div>
