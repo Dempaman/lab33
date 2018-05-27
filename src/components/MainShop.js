@@ -72,7 +72,7 @@ class MainShop extends Component{
       this.props.dispatch(actionFetchGotData(items));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
-        firebase.database().ref('items/' + find.id).update({
+        firebase.database().ref('items/' + find.itemName).update({
           'stock': find.stock - 1
         });
       }else{

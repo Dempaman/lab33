@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionUpdateQuantity, actionTotalSum} from '../actions/actions.js';
-import {NO_DATA, LOADING} from '../actions/constants.js';
+import {actionFetchGotData, actionAddItem, actionUpdateQuantity, actionTotalSum} from '../actions/actions.js';
 import firebase from './firebase.js';
 import './Cart.css';
 
@@ -54,7 +53,7 @@ class Cart extends Component {
       this.props.dispatch(actionFetchGotData(items));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
-        firebase.database().ref('items/' + find.id).update({
+        firebase.database().ref('items/' + find.itemName).update({
           'stock': find.stock - 1
         });
       }else{
@@ -86,7 +85,7 @@ class Cart extends Component {
       this.props.dispatch(actionFetchGotData(items));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
-        firebase.database().ref('items/' + find.id).update({
+        firebase.database().ref('items/' + find.itemName).update({
           'stock': find.stock + 1
         });
       }else{
