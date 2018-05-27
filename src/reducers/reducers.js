@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {NO_DATA, LOADING, LOADED, UPDATE_QUANTITY, ADD_ITEM, ADD_SUM} from '../actions/constants.js';
+import {NO_DATA, LOADING, LOADED, UPDATE_QUANTITY, ADD_ITEM, ADD_SUM, UNDO_ITEM, UNDO_SUM} from '../actions/constants.js';
 
 let itemsReducer = (state={fetchState: NO_DATA, itemsData: null }, action) =>{
   switch(action.type){
@@ -24,19 +24,19 @@ let itemsReducer = (state={fetchState: NO_DATA, itemsData: null }, action) =>{
   }
 }
 
-let addItemReducer = (state=[{cart: null, quantity: 0}], action) => {
+let addItemReducer = (state= {past:[], present:[], future:[]}, action) => {
   switch( action.type ) {
     case ADD_ITEM:
-      return[
-        ...state,
-          {
-            cart: action.name,
-            quantity:action.quantity,
-          }
-    ];
+      return{
+        past: [...state.past, state.present ],
+        present: [...state.present, { cart: action.name, quantity:action.quantity} ],
+        future: []
+      };
 
     case UPDATE_QUANTITY:
-      return state.map( (item, index) => {
+    return{
+      past: [...state.past, state.present ],
+      present: state.present.map( (item, index) => {
           if(item.cart.itemName !== action.itemId) {
               return item;
           }
@@ -44,17 +44,41 @@ let addItemReducer = (state=[{cart: null, quantity: 0}], action) => {
               ...item, quantity: item.quantity + action.amount,
               ...action.item
           };
-      });
+      }), //present
+      future: []
+    };
+
+    case UNDO_ITEM:
+      let lastPast = state.past[state.past.length - 1];
+      return{
+        past: state.past.filter( x => x !== lastPast ),
+        present: lastPast,
+        future: [state.present, ...state.future]
+      }
 
       default:
         return state;
     }
 }
 
-let totalSumReducer = (state = 0, action) =>{
+let totalSumReducer = (state ={past:[], present:0, future:[]}, action) =>{
   switch ( action.type ) {
     case ADD_SUM:
-      return state + action.sum;
+    return {
+      past: [...state.past, state.present],
+      present: state.present + Number(action.sum),
+      future: []
+    };
+
+    case UNDO_SUM:
+    if( state.past.length < 1 )
+      return state;
+    let last = state.past[state.past.length - 1];
+    return {
+      past: state.past.filter(x => x !== last),
+      present: last,
+      future: [state.present, ...state.future]
+    };
 
     default:
   	   return state;

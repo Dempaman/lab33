@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {actionFetchGotData, actionAddItem, actionUpdateQuantity, actionTotalSum} from '../actions/actions.js';
+import {actionFetchGotData, actionAddItem, actionUpdateQuantity, actionTotalSum, actionUndoItem, actionUndoSum} from '../actions/actions.js';
 import firebase from './firebase.js';
 import './Cart.css';
 
@@ -32,6 +32,7 @@ class Cart extends Component {
 
     return(
       <div className="containerCart">
+        <button onClick={this.handleUndoItem} >Undo Item</button>
         <div>
           {contentCart}
         </div>
@@ -41,6 +42,11 @@ class Cart extends Component {
       </div>
     )
   }
+
+  handleUndoItem = event => {
+    this.props.dispatch( actionUndoSum() );
+		this.props.dispatch( actionUndoItem() );
+	}
 
   addItemToCart(itemId, index){
     firebase.database().ref('/items/').once('value')
@@ -111,8 +117,8 @@ let mapStateToProps = state => {
   return {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
-    cart: state.cartItems,
-    sum: state.sum
+    cart: state.cartItems.present,
+    sum: state.sum.present
   }
 }
 

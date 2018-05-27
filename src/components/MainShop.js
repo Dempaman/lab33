@@ -70,6 +70,7 @@ class MainShop extends Component{
         items.push(child.val());
       });
       this.props.dispatch(actionFetchGotData(items));
+
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
         firebase.database().ref('items/' + find.itemName).update({
@@ -81,15 +82,14 @@ class MainShop extends Component{
       let action = actionAddItem(find);
       let actionUpdate = actionUpdateQuantity(index, itemId, 1);
       let actionSum = actionTotalSum(find.price);
-
       if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
         this.props.dispatch(actionUpdate)
         console.log("varan finns redan i din cart")
       }else{
         this.props.dispatch(action);
       }
-      this.props.dispatch(actionSum);
-      console.log(this.props.sum)
+        this.props.dispatch(actionSum);
+
     }.bind(this));
   }
 
@@ -100,8 +100,8 @@ let mapStateToProps = state => {
   return {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
-    cart: state.cartItems,
-    sum: state.sum
+    cart: state.cartItems.present,
+    sum: state.sum.present
   }
 }
 
