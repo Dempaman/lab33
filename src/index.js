@@ -8,7 +8,6 @@ import {Provider} from 'react-redux';
 import rootReducer from './reducers/reducers.js'
 
 const initialState = {
-	cartItems:[],
 	history:[],
 	login:{
 		user: null,

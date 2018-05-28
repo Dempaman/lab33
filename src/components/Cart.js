@@ -8,6 +8,8 @@ import MdUndo from 'react-icons/lib/md/undo';
 class Cart extends Component {
 
   render(){
+      let calcSum = this.props.cart.reduce(
+        (accumulator, currentValue) => accumulator += currentValue.cart.price * currentValue.quantity, 0 );
       let contentCart;
       let contentSum;
       if(!this.props.cart){
@@ -26,16 +28,16 @@ class Cart extends Component {
         ));
         contentCart = <div className="cartHolder"> {cartList} </div>
       }
-      if(this.props.sum === 0){
+      if(this.props.cart.length < 1){
         contentSum = <div>Du har inga varor i kundvagnen</div>
       }else{
-        contentSum = <p>Totalt {this.props.sum}kr</p>
+        contentSum = <p>Totalt {calcSum}kr</p>
       }
 
 
     return(
       <div className="containerCart">
-        <button className="undoButton" onClick={this.handleUndoItem}><MdUndo size={25} /></button>
+        <button className="undoButton" onClick={this.handleUndoItem} disabled={!this.props.makeDisable} ><MdUndo size={25} /></button>
         <div>
           {contentCart}
         </div>
@@ -52,49 +54,34 @@ class Cart extends Component {
 	}
 
   addItemToCart(itemId, index){
-    firebase.database().ref('/items/').once('value')
-    .then(function(snapshot) {
-      let items = [];
-      snapshot.forEach(function(child) {
-        items.push(child.val());
+    this.props.dispatch(actionFetchGotData(this.props.data));
+    let find = this.props.data.find(item => item.itemName === itemId );
+    if(find.stock > 0){
+      firebase.database().ref('items/' + find.removeName).update({
+        'stock': find.stock - 1
       });
+    }else{
+      console.log("Finns inga fler varor av denna sort")
+    }
+    let action = actionAddItem(find);
+    let actionUpdate = actionUpdateQuantity(index, itemId, 1);
+    let actionSum = actionTotalSum(find.price);
 
-      this.props.dispatch(actionFetchGotData(items));
-      let find = this.props.data.find(item => item.itemName === itemId );
-      if(find.stock > 0){
-        firebase.database().ref('items/' + find.itemName).update({
-          'stock': find.stock - 1
-        });
-      }else{
-        console.log("Finns inga fler varor av denna sort")
-      }
-      let action = actionAddItem(find);
-      let actionUpdate = actionUpdateQuantity(index, itemId, 1);
-      let actionSum = actionTotalSum(find.price);
-
-      if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
-        this.props.dispatch(actionUpdate)
-        console.log("varan finns redan i din cart")
-      }else{
-        this.props.dispatch(action);
-      }
-      this.props.dispatch(actionSum);
-      console.log(this.props.sum)
-    }.bind(this));
+    if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
+      this.props.dispatch(actionUpdate)
+      console.log("varan finns redan i din cart")
+    }else{
+      this.props.dispatch(action);
+    }
+    this.props.dispatch(actionSum);
+    console.log(this.props.sum)
   }
 
   removeOneItemFromCart(itemId, index){
-    firebase.database().ref('/items/').once('value')
-    .then(function(snapshot) {
-      let items = [];
-      snapshot.forEach(function(child) {
-        items.push(child.val());
-      });
-
-      this.props.dispatch(actionFetchGotData(items));
+      this.props.dispatch(actionFetchGotData(this.props.cart));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
-        firebase.database().ref('items/' + find.itemName).update({
+        firebase.database().ref('items/' + find.removeName).update({
           'stock': find.stock + 1
         });
       }else{
@@ -107,7 +94,6 @@ class Cart extends Component {
         this.props.dispatch(actionUpdate)
       }
       this.props.dispatch(actionSum);
-    }.bind(this));
   }
 
 
@@ -121,7 +107,8 @@ let mapStateToProps = state => {
     fetchState: state.items.fetchState,
     data: state.items.itemsData,
     cart: state.cartItems.present,
-    sum: state.sum.present
+    sum: state.sum.present,
+    makeDisable: state.cartItems.past.length >= 1
   }
 }
 

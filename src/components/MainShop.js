@@ -69,25 +69,18 @@ class MainShop extends Component{
   }
 
   addItemToCart(itemId, index){
-    firebase.database().ref('/items/').once('value')
-    .then(function(snapshot) {
-      let items = [];
-      snapshot.forEach(function(child) {
-        items.push(child.val());
-      });
-      let actionFetch = actionFetchGotData(items);
+      let actionFetch = actionFetchGotData(this.props.data);
       this.props.dispatch(actionFetch);
       this.props.dispatch(actionHistoryAdd(actionFetch.type));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
-        firebase.database().ref('items/' + find.itemName).update({
+        firebase.database().ref('items/' + find.removeName).update({
           'stock': find.stock - 1
         });
       }else{
         console.log("Finns inga fler varor av denna sort")
       }
       let action = actionAddItem(find);
-
       let actionUpdate = actionUpdateQuantity(index, itemId, 1);
       let actionSum = actionTotalSum(find.price);
       let historyItem = action.type;
@@ -100,9 +93,7 @@ class MainShop extends Component{
         this.props.dispatch(action);
         this.props.dispatch(actionHistory);
       }
-        this.props.dispatch(actionSum);
-
-    }.bind(this));
+      this.props.dispatch(actionSum);
   }
 
 }

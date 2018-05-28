@@ -41,8 +41,7 @@ let addItemReducer = (state= {past:[], present:[], future:[]}, action) => {
               return item;
           }
           return {
-              ...item, quantity: item.quantity + action.amount,
-              ...action.item
+              ...item, quantity: item.quantity + action.amount
           };
       }), //present
       future: []
@@ -50,6 +49,7 @@ let addItemReducer = (state= {past:[], present:[], future:[]}, action) => {
 
     case UNDO_ITEM:
       let lastPast = state.past[state.past.length - 1];
+      //console.log("UNDO_ITEM", state.past, state.present)
       return{
         past: state.past.filter( x => x !== lastPast ),
         present: lastPast,
