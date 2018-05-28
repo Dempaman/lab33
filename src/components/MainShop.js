@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd, actionUpdateQuantity, actionTotalSum} from '../actions/actions.js';
+import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd, actionUpdateQuantity} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
 import {connect} from 'react-redux';
 import firebase from './firebase.js';
@@ -48,8 +48,7 @@ class MainShop extends Component{
     let actionFetch = actionItemFetchData();
     let actionHistory = actionHistoryAdd(actionFetch.type);
     this.props.dispatch(actionFetch);
-    this.props.dispatch(actionHistory);
-    console.log(actionFetch);
+    this.props.dispatch(actionHistory)
     firebase.database().ref('/items/').once('value')
     .then(function(snapshot) {
       let items = [];
@@ -82,7 +81,6 @@ class MainShop extends Component{
       }
       let action = actionAddItem(find);
       let actionUpdate = actionUpdateQuantity(index, itemId, 1);
-      let actionSum = actionTotalSum(find.price);
       let historyItem = action.type;
       let actionHistory = actionHistoryAdd(historyItem);
       console.log(action.name.itemName);
@@ -93,7 +91,6 @@ class MainShop extends Component{
         this.props.dispatch(action);
         this.props.dispatch(actionHistory);
       }
-      this.props.dispatch(actionSum);
   }
 
 }
@@ -106,7 +103,6 @@ let mapStateToProps = state => {
     history: state.history,
     user: state.login.user,
     cart: state.cartItems.present,
-    sum: state.sum.present
   }
 }
 
