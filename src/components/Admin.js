@@ -47,11 +47,6 @@ class Admin extends Component{
     e.preventDefault();
     if(this.state.product.length <= 0){
       console.log("Product must be filled");
-      this.setState({
-        product: null,
-        price: null,
-        imageUrl: null
-      })
     }else{
       firebase.database().ref('items/' + this.state.product).set({
         itemName: this.state.product,
@@ -101,7 +96,7 @@ class Admin extends Component{
     let find = this.props.data.find(item => item.itemName === itemId );
     this.setState({currentEdit: find.removeName})
     this.setState({showEdit: true})
-    console.log(this.state.currentEdit)
+    console.log(find);
 
   }
 
@@ -135,8 +130,7 @@ class Admin extends Component{
       contentEdit = <div>No data.</div>;
     } else {
       const dataList = this.props.data.map( x => (
-        <div
-            className="editContainer" key={x.itemName}>
+        <div className="editContainer" key={x.itemName}>
           <div><img className="productImgEdit" src={x.productImg} alt="Not found"/></div>
           <div className="itemNameEdit">{x.itemName}</div>
           <div className="kronorTxtEdit">{x.price}kr</div>
@@ -145,8 +139,6 @@ class Admin extends Component{
           <button className="buttonRemoveEdit" onClick={() => this.editItem(x.itemName)}>Edit</button>
           <button className="buttonRemoveEdit" onClick={() => this.removeItem(x.itemName)}>Remove</button>
           </div>
-          {/* <button onClick={() => this.addItemToCart(x.itemName)}>Köp</button> */}
-
         </div>
       ));
       contentEdit = <div className="editItems"> {dataList} </div>;

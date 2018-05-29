@@ -52,6 +52,7 @@ class MainShop extends Component{
     console.log(actionFetch);
     firebase.database().ref('/items/').once('value')
     .then(function(snapshot) {
+      console.log(snapshot.val())
       let items = [];
       snapshot.forEach(function(child) {
         items.push(child.val());
