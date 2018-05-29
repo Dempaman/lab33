@@ -12,7 +12,7 @@ const initialState = {
 	login:{
 		user: null,
 	},
-	sum: { past: [], present: 0, future: [] },
+	adminItem: { past:[], present:[], future:[] },
 	cartItems: { past:[], present:[], future:[] },
 	items: {
 		fetchState: 0,

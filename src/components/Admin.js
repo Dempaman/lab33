@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {actionAddAdminItem} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
 import MdClose from 'react-icons/lib/md/close';
 import './Admin.css';
@@ -28,6 +29,7 @@ class Admin extends Component{
     this.updateItem = this.updateItem.bind(this);
     this.onClickSend = this.onClickSend.bind(this);
     this.handleClickClose = this.handleClickClose.bind(this);
+    this.addNewItem = this.addNewItem.bind(this);
 
   }
 
@@ -43,6 +45,12 @@ class Admin extends Component{
     this.setState({imageUrl: event.target.value});
   }
 
+  addNewItem(itemName, price, productImg, removeName, stock){
+    this.props.dispatch(actionAddAdminItem(itemName, price, productImg, removeName, stock));
+    console.log(this.props.adminItem)
+    console.log("Does it trigger??")
+  }
+
   onClickSend(e){
     e.preventDefault();
     if(this.state.product.length <= 0){
@@ -56,6 +64,7 @@ class Admin extends Component{
         stock: 100
       });
       this.setState({added: true})
+      this.addNewItem(this.state.product, this.state.price, this.state.imageUrl, this.state.product, 100)
     }
 
   }
@@ -87,6 +96,9 @@ class Admin extends Component{
       .then(function() {
         console.log("Remove succeeded.")
       })
+
+      // skapa en dispatch som lägger till i present listan för den nya reducern
+
       .catch(function(error) {
         console.log("Remove failed: " + error.message)
       });
@@ -103,6 +115,7 @@ class Admin extends Component{
   updateItem(e){
     e.preventDefault();
     console.log(this.state.currentEdit)
+    console.log(this.props.adminItem)
     if(this.state.editProduct.length <= 0){
       console.log("Must choose product to edit");
     }else{
@@ -176,7 +189,8 @@ let mapStateToProps = state => {
     data: state.items.itemsData,
     cart: state.cartItems,
     history: state.history,
-    user: state.login.user
+    user: state.login.user,
+    adminItem: state.adminItem
   }
 }
 
