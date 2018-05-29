@@ -1,4 +1,4 @@
-import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, ADD_SUM, UNDO_ITEM, UNDO_SUM, ADD_ADMIN_ITEM, EDIT_ITEM, REMOVE_ITEM} from './constants.js'
+import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, ADD_SUM, UNDO_ITEM, UNDO_SUM, ADD_ADMIN_ITEM} from './constants.js'
 
 let actionItemFetchData = () => {
   return {
@@ -28,6 +28,13 @@ let actionAddItem = (name, quantity) => {
   };
 }
 
+let actionTotalSum = (sum) => {
+  return {
+    type: ADD_SUM,
+    sum: sum
+  };
+}
+
 let actionUpdateQuantity = (index, itemId, amount) => {
   return {
     type: UPDATE_QUANTITY,
@@ -36,6 +43,7 @@ let actionUpdateQuantity = (index, itemId, amount) => {
     amount: amount
   };
 }
+
 
 let actionHistoryAdd = item =>{
   return{
@@ -65,6 +73,12 @@ let actionUndoItem = () => {
   };
 }
 
+let actionUndoSum = () => {
+  return{
+  type: UNDO_SUM,
+  };
+}
+
 let actionAddAdminItem = (itemName, price, productImg, removeName, stock) => {
   return{
     type: ADD_ADMIN_ITEM,
@@ -76,18 +90,4 @@ let actionAddAdminItem = (itemName, price, productImg, removeName, stock) => {
   }
 }
 
-let actionEditItem = () => {
-  return{
-    type: EDIT_ITEM,
-  }
-}
-
-let actionRemoveItem = () => {
-  return{
-    type: REMOVE_ITEM,
-  }
-}
-
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart,
-        actionUpdateQuantity, actionUndoItem, actionHistoryAdd, actionLogin,
-        actionAddAdminItem, actionEditItem, actionRemoveItem};
+export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart, actionUpdateQuantity, actionTotalSum, actionUndoItem, actionUndoSum, actionHistoryAdd, actionLogin, actionAddAdminItem};

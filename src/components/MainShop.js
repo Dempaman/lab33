@@ -2,10 +2,29 @@ import React, { Component } from 'react';
 import {actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionHistoryAdd, actionUpdateQuantity} from '../actions/actions.js';
 import {NO_DATA, LOADING} from '../actions/constants.js';
 import {connect} from 'react-redux';
+import MdViewModule from 'react-icons/lib/md/view-module';
+import MdViewHeadline from 'react-icons/lib/md/view-headline';
 import firebase from './firebase.js';
 import './MainShop.css'
 
 class MainShop extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      changed: false
+    }
+    this.changeViewBig = this.changeViewBig.bind(this);
+    this.changeViewSmall = this.changeViewSmall.bind(this);
+  }
+
+  changeViewBig(){
+    this.setState({changed: true})
+  }
+
+  changeViewSmall(){
+    this.setState({changed: false})
+  }
+
   componentDidMount(){
     this.fetchItemData();
     firebase.database().ref('/items/').on('child_changed',function(snapshot) {
@@ -21,8 +40,8 @@ class MainShop extends Component{
   			content = <div>No data.</div>;
   		} else {
   			const dataList = this.props.data.map( (x, i) => (
-  				<div className="shopRenderContainer" key={i} i={i}>
-            <div><img className="productImg" src={x.productImg} alt="Not found"/></div>
+  				<div style={{width: this.state.changed ? "100%" : ""}} className="shopRenderContainer" key={i} i={i}>
+            <div><img style={{width: this.state.changed ? "100%" : "350px"}} className="productImg" src={x.productImg} alt="Not found"/></div>
             <div className="itemName">{x.itemName}</div>
             <div className="stockTxt">{x.stock}st i lager</div> {/*??*/}
             <div className="kronorTxt">{x.price}kr</div>
@@ -35,12 +54,14 @@ class MainShop extends Component{
 
     return(
       <div className="shopContainer">
+        {this.state.changed ? <button onClick={this.changeViewSmall} className="changeView"><MdViewModule size={30}/></button> : <button onClick={this.changeViewBig} className="changeView"><MdViewHeadline size={30} /></button>  }
           <div className="shopWrap">
             {content}
           </div>
       </div>
     )
   }
+
 
 
   //Hämtar hem all data från firebase och lägger in dom i state
@@ -87,6 +108,7 @@ class MainShop extends Component{
       console.log(action.name.itemName);
       if (this.props.cart.filter(e => e.cart.itemName === find.itemName).length > 0) {
         this.props.dispatch(actionUpdate)
+        this.props.dispatch(actionHistoryAdd(actionUpdate.type));
         console.log("varan finns redan i din cart")
       }else{
         this.props.dispatch(action);
