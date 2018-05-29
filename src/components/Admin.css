@@ -80,6 +80,7 @@
 }
 
 .editContainer{
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -117,6 +118,7 @@
   color: white;
 }
 .itemNameEdit{
+  font-family: 'Montserrat', sans-serif;
   width: 200px;
   margin: 0 15px 0 15px;
 }

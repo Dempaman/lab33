@@ -101,11 +101,6 @@ class Admin extends Component{
     e.preventDefault();
     if(this.state.product.length <= 0){
       console.log("Product must be filled");
-      this.setState({
-        product: null,
-        price: null,
-        imageUrl: null
-      })
     }else{
       firebase.database().ref('items/' + this.state.product).set({
         itemName: this.state.product,
@@ -178,7 +173,12 @@ class Admin extends Component{
     this.setState({currentEdit: find.removeName});
     this.setState({lastObjectAdded: find});
     this.setState({showEdit: true})
+<<<<<<< HEAD
     console.log(find.itemName)
+=======
+    console.log(find);
+
+>>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
   }
 
   updateItem(e){
@@ -218,6 +218,7 @@ class Admin extends Component{
       contentEdit = <div>No data.</div>;
     } else {
       const dataList = this.props.data.map( x => (
+<<<<<<< HEAD
           <div
               className="editContainer" key={x.itemName}>
             <div><img className="productImgEdit" src={x.productImg} alt="Not found"/></div>
@@ -229,6 +230,18 @@ class Admin extends Component{
               <button className="buttonRemoveEdit" onClick={() => this.removeItem(x.removeName)}>Remove</button>
             </div>
           </div>
+=======
+        <div className="editContainer" key={x.itemName}>
+          <div><img className="productImgEdit" src={x.productImg} alt="Not found"/></div>
+          <div className="itemNameEdit">{x.itemName}</div>
+          <div className="kronorTxtEdit">{x.price}kr</div>
+          <div className="blurImgEdit"></div>
+          <div className="positionButtons">
+          <button className="buttonRemoveEdit" onClick={() => this.editItem(x.itemName)}>Edit</button>
+          <button className="buttonRemoveEdit" onClick={() => this.removeItem(x.itemName)}>Remove</button>
+          </div>
+        </div>
+>>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
       ));
       contentEdit = <div className="editItems">
                       <div className="editButtonsCont">

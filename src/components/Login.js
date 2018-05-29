@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import {actionLogin} from '../actions/actions.js';
+=======
+
+import {actionLogin, actionHistoryAdd} from '../actions/actions.js';
+>>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
 import {connect} from 'react-redux';
 import { auth, provider } from './firebase.js';
 import './Login.css';
@@ -8,7 +13,9 @@ class Login extends Component {
   logout() {
     auth.signOut()
     .then(() => {
-      this.props.dispatch(actionLogin(null));
+      let actionDispLogout = actionLogin(null);
+      this.props.dispatch(actionDispLogout);
+      this.props.dispatch(actionHistoryAdd(actionDispLogout.type));
     });
   }
   //Google Login
@@ -16,7 +23,9 @@ class Login extends Component {
     auth.signInWithPopup(provider)
       .then((result) => {
         const user = result.user;
-        this.props.dispatch(actionLogin(user));
+        let actionDispLogin = actionLogin(user);
+        this.props.dispatch(actionDispLogin);
+        this.props.dispatch(actionHistoryAdd(actionDispLogin.type));
     });
   }
 
@@ -24,7 +33,9 @@ class Login extends Component {
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.props.dispatch(actionLogin(user));
+        let actionDispKeep = actionLogin(user)
+        this.props.dispatch(actionDispKeep);
+        this.props.dispatch(actionHistoryAdd(actionDispKeep.type));
       }
     });
   }
