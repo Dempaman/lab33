@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {actionLogin} from '../actions/actions.js';
 import {connect} from 'react-redux';
 import { auth, provider } from './firebase.js';
@@ -47,6 +46,7 @@ class Login extends Component {
 
 let mapStateToProps = state => {
   return {
+    data: state.items.itemsData,
     user: state.login.user
   }
 }

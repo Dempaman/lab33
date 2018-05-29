@@ -11,6 +11,13 @@ class MainShop extends Component{
     firebase.database().ref('/items/').on('child_changed',function(snapshot) {
         this.fetchItemData();
       }.bind(this))
+    firebase.database().ref('/items/').on('child_added',function(snapshot) {
+        this.fetchItemData();
+      }.bind(this))
+    firebase.database().ref('/items/').on('child_removed',function(snapshot) {
+        this.fetchItemData();
+      }.bind(this))
+
   }
 
     render(){
@@ -68,9 +75,6 @@ class MainShop extends Component{
   }
 
   addItemToCart(itemId, index){
-      let actionFetch = actionFetchGotData(this.props.data);
-      this.props.dispatch(actionFetch);
-      this.props.dispatch(actionHistoryAdd(actionFetch.type));
       let find = this.props.data.find(item => item.itemName === itemId );
       if(find.stock > 0){
         firebase.database().ref('items/' + find.removeName).update({

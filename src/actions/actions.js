@@ -1,4 +1,4 @@
-import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, ADD_SUM, UNDO_ITEM, UNDO_SUM, ADD_ADMIN_ITEM, EDIT_ITEM, REMOVE_ITEM} from './constants.js'
+import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, UNDO_ITEM, ADD_ADMIN_ITEM, UNDO_ADMIN, REDO_ITEM, ADD_REMOVED_ITEM, UNDO_REMOVED_ITEM, REDO_REMOVED_ITEM} from './constants.js'
 
 let actionItemFetchData = () => {
   return {
@@ -65,6 +65,12 @@ let actionUndoItem = () => {
   };
 }
 
+let actionUndoAdminItem = () => {
+  return{
+    type: UNDO_ADMIN
+  };
+}
+
 let actionAddAdminItem = (itemName, price, productImg, removeName, stock) => {
   return{
     type: ADD_ADMIN_ITEM,
@@ -72,22 +78,40 @@ let actionAddAdminItem = (itemName, price, productImg, removeName, stock) => {
     price: price,
     productImg: productImg,
     removeName: removeName,
-    stock: stock
+    stock: stock,
   }
 }
 
-let actionEditItem = () => {
+let actionRedoItem = () => {
+	return {
+		type: REDO_ITEM
+	};
+}
+
+let actionAddRemovedItem = (itemName, price, productImg, removeName, stock) => {
   return{
-    type: EDIT_ITEM,
+    type: ADD_REMOVED_ITEM,
+    itemName: itemName,
+    price: price,
+    productImg: productImg,
+    removeName: removeName,
+    stock: stock,
   }
 }
 
-let actionRemoveItem = () => {
+let actionUndoRemovedItem = () => {
   return{
-    type: REMOVE_ITEM,
-  }
+    type: UNDO_REMOVED_ITEM
+  };
 }
+
+let actionRedoRemovedItem = () => {
+  return{
+    type: REDO_REMOVED_ITEM
+  };
+}
+
 
 export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart,
         actionUpdateQuantity, actionUndoItem, actionHistoryAdd, actionLogin,
-        actionAddAdminItem, actionEditItem, actionRemoveItem};
+        actionAddAdminItem, actionUndoAdminItem, actionRedoItem, actionAddRemovedItem, actionUndoRemovedItem, actionRedoRemovedItem};

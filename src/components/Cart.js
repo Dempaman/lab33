@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {actionFetchGotData, actionAddItem, actionUpdateQuantity, actionUndoItem} from '../actions/actions.js';
+import {actionAddItem, actionUpdateQuantity, actionUndoItem} from '../actions/actions.js';
 import firebase from './firebase.js';
 import './Cart.css';
 import MdUndo from 'react-icons/lib/md/undo';
@@ -53,11 +53,9 @@ class Cart extends Component {
     firebase.database().ref('items/' + this.props.cart[this.props.cart.length - 1].cart.removeName).update({
       'stock': this.props.cart[this.props.cart.length - 1].cart.stock  + this.props.cart[this.props.cart.length - 1].quantity - 1
     });
-    console.log("Present=",this.props.cart[this.props.cart.length - 1].quantity)
 	}
 
   addItemToCart(itemId, index){
-    this.props.dispatch(actionFetchGotData(this.props.data));
     let find = this.props.data.find(item => item.itemName === itemId );
     if(find.stock > 0){
       firebase.database().ref('items/' + find.removeName).update({
@@ -77,7 +75,6 @@ class Cart extends Component {
   }
 
   removeOneStockFromCart(itemId, index){
-    this.props.dispatch(actionFetchGotData(this.props.cart));
     let find = this.props.data.find(item => item.itemName === itemId );
     if(find.stock > 0){
       firebase.database().ref('items/' + find.removeName).update({

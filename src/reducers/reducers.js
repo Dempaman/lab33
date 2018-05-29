@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {NO_DATA, LOADING, LOADED, UPDATE_QUANTITY, ADD_ITEM, UNDO_ITEM, ADD_ADMIN_ITEM, EDIT_ITEM, REMOVE_ITEM} from '../actions/constants.js';
+import {NO_DATA, LOADING, LOADED, UPDATE_QUANTITY, ADD_ITEM, UNDO_ITEM, ADD_ADMIN_ITEM, UNDO_ADMIN, REDO_ITEM, ADD_REMOVED_ITEM, UNDO_REMOVED_ITEM, REDO_REMOVED_ITEM} from '../actions/constants.js';
 
 let itemsReducer = (state={fetchState: NO_DATA, itemsData: null }, action) =>{
   switch(action.type){
@@ -49,7 +49,6 @@ let addItemReducer = (state= {past:[], present:[], future:[]}, action) => {
 
     case UNDO_ITEM:
       let lastPast = state.past[state.past.length - 1];
-      console.log("UNDO_ITEM", state.past, state.present)
       return{
         past: state.past.filter( x => x !== lastPast ),
         present: lastPast,
@@ -64,45 +63,76 @@ let addItemReducer = (state= {past:[], present:[], future:[]}, action) => {
 let adminItemReducer = (state= {past:[], present:[], future:[]}, action) => {
   switch( action.type ) {
     case ADD_ADMIN_ITEM:
-    console.log("ADD_ADMIN_ITEM", state.present)
       return{
         past: [...state.past, state.present ],
-        present: [...state.present, { itemName: action.itemName,
-                                      price: action.price,
-                                      productImg: action.productImg,
-                                      removeName: action.removeName,
-                                      stock: action.stock }],
+        present: [
+          ...state.present,
+          {
+            itemName: action.itemName,
+            price: action.price,
+            productImg: action.productImg,
+            removeName: action.removeName,
+            stock: action.stock
+          }
+        ],
         future: []
       };
 
-    case EDIT_ITEM:
-      return{
-        past: [...state.past, state.present ],
-        present: state.present.map( (item, index) => {
-            if(item.cart.itemName !== action.itemId) {
-                return item;
-            }
-            return {
-                ...item, quantity: item.quantity + action.amount
-            };
-        }), //present
-        future: []
-      };
-
-    case REMOVE_ITEM:
-      return{
-        past:[],
-        present:[],
-        future:[]
-      }
-
-    case UNDO_ITEM:
+    case UNDO_ADMIN:
       let lastPast = state.past[state.past.length - 1];
       return{
         past: state.past.filter( x => x !== lastPast ),
         present: lastPast,
         future: [state.present, ...state.future]
       }
+
+    case REDO_ITEM:
+				let firstFuture = state.future[0];
+				return {
+					past: [...state.past, state.present],
+					present: firstFuture,
+					future: state.future.filter(x => x !== firstFuture)
+				};
+
+      default:
+        return state;
+    }
+}
+
+let recoverRemovedItemFromFbReducer = (state= {past:[], present:[], future:[]}, action) => {
+  switch( action.type ) {
+    case ADD_REMOVED_ITEM:
+      return{
+        past: [...state.past, state.present ],
+        present: [
+          ...state.present,
+          {
+            itemName: action.itemName,
+            price: action.price,
+            productImg: action.productImg,
+            removeName: action.removeName,
+            stock: action.stock
+          }
+        ],
+        future: []
+      };
+
+    case UNDO_REMOVED_ITEM:
+      let lastPast = state.past[state.past.length - 1];
+      console.log("UNDO_REMOVED_ITEM", state.present, state.future)
+      return{
+        past: state.past.filter( x => x !== lastPast ),
+        present: lastPast,
+        future: [state.present, ...state.future]
+      }
+
+    case REDO_REMOVED_ITEM:
+				let firstFuture = state.future[0];
+				return {
+					past: [...state.past, state.present],
+					present: firstFuture,
+					future: state.future.filter(x => x !== firstFuture)
+				};
 
       default:
         return state;
@@ -151,7 +181,8 @@ let rootReducer = combineReducers({
   history: historyReducer,
   login: loginReducer,
   showCart: showCartReducer,
-  adminItem: adminItemReducer
+  adminItem: adminItemReducer,
+  recoverItem: recoverRemovedItemFromFbReducer
 })
 
 export default rootReducer;
