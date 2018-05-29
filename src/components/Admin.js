@@ -244,7 +244,9 @@ class Admin extends Component{
           {this.state.showEdit ?
             <div className="editItemContainer">
             <form>
-              <button onClick={this.handleClickClose} className="buttonCloseEdit"><MdClose size={25} /></button>
+              <div className="closeDivInEdit">
+                <button onClick={this.handleClickClose} className="buttonCloseEdit"><MdClose size={25} /></button>
+              </div>
               <h3>Update</h3>
               <input onChange={this.onChangeHandleProductEdit} type="text" placeholder="Product"/>
               <input onChange={this.onChangeHandlePriceEdit} type="text" placeholder="Price"/>
@@ -256,10 +258,14 @@ class Admin extends Component{
             <div>
               {this.state.showConfirm ?
                 <div className="confirmItemContainer">
-                  <div>
-                    <button onClick={this.handleClickClose} className="buttonCloseEdit"><MdClose size={25} /></button>
-                    <button>No</button>
-                    <button onClick={() => this.confirmRemoveItem()} >Yes</button>
+                  <div className="innerConfDiv">
+                    <div className="closeDiv">
+                      <button onClick={this.handleClickClose} className="buttonCloseEdit"><MdClose size={25} /></button>
+                    </div>
+                    <div className="yesNoBtnDiv">
+                      <button className="buttonRemoveEdit" onClick={this.handleClickClose} >No</button>
+                      <button className="buttonRemoveEdit" onClick={() => this.confirmRemoveItem()} >Yes</button>
+                    </div>
                   </div>
                 </div>
                 : null}

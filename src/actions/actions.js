@@ -28,13 +28,6 @@ let actionAddItem = (name, quantity) => {
   };
 }
 
-let actionTotalSum = (sum) => {
-  return {
-    type: ADD_SUM,
-    sum: sum
-  };
-}
-
 let actionUpdateQuantity = (index, itemId, amount) => {
   return {
     type: UPDATE_QUANTITY,

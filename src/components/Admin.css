@@ -159,9 +159,6 @@
   width: 100%;
 }
 .buttonCloseEdit{
-  position: absolute;
-  top: 5px;
-  right: 5px;
   background-color: transparent;
   border: none;
   outline: none;
@@ -170,20 +167,43 @@
 
 .confirmItemContainer{
   display: flex;
+  z-index: 10;
   justify-content: center;
   align-content: center;
   position: fixed;
-  width: 300px;
-  height: 200px;
-  background-color: white;
+  width: 100%;
+  height: 100%;
+  background-color: #00000052;
   -webkit-box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
   -moz-box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
   box-shadow: 2px -1px 121px -25px rgba(0,0,0,0.48);
-  top: 40%;
-  left: 40%;
+  top: 0px;
+  left: 0px;
 }
 
 .editButtonsCont{
   display: flex;
   margin: 10px;
+}
+
+.yesNoBtnDiv{
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.innerConfDiv{
+  margin-top: 30%;
+  width: 200px;
+  height: 100px;
+  background-color: white;
+}
+
+.closeDiv{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeDivInEdit{
+  margin-left: 456px;
 }
