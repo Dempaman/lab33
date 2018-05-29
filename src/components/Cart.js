@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-<<<<<<< HEAD
-import {actionAddItem, actionUpdateQuantity, actionUndoItem} from '../actions/actions.js';
-=======
-import {actionFetchGotData, actionAddItem, actionUpdateQuantity, actionUndoItem, actionHistoryAdd} from '../actions/actions.js';
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
+import {actionAddItem, actionUpdateQuantity, actionUndoItem, actionHistoryAdd} from '../actions/actions.js';
 import firebase from './firebase.js';
 import './Cart.css';
 import MdUndo from 'react-icons/lib/md/undo';
@@ -63,12 +59,6 @@ class Cart extends Component {
 	}
 
   addItemToCart(itemId, index){
-<<<<<<< HEAD
-=======
-    let fetchGot = actionFetchGotData(this.props.data);
-    this.props.dispatch(fetchGot);
-    this.props.dispatch(actionHistoryAdd(fetchGot.type))
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
     let find = this.props.data.find(item => item.itemName === itemId );
     if(find.stock > 0){
       firebase.database().ref('items/' + find.removeName).update({
@@ -90,12 +80,6 @@ class Cart extends Component {
   }
 
   removeOneStockFromCart(itemId, index){
-<<<<<<< HEAD
-=======
-    let fetchGotCart = actionFetchGotData(this.props.cart);
-    this.props.dispatch(fetchGotCart);
-    this.props.dispatch(actionHistoryAdd(fetchGotCart.type));
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
     let find = this.props.data.find(item => item.itemName === itemId );
     if(find.stock > 0){
       firebase.database().ref('items/' + find.removeName).update({

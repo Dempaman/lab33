@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, UNDO_ITEM, ADD_ADMIN_ITEM, UNDO_ADMIN, REDO_ITEM, ADD_REMOVED_ITEM, UNDO_REMOVED_ITEM, REDO_REMOVED_ITEM} from './constants.js'
-=======
-import {ADD_ITEM, ITEM_FETCH_DATA, FETCH_FAILED, FETCH_GOT_DATA, UPDATE_QUANTITY, ADD_SUM, UNDO_ITEM, UNDO_SUM, ADD_ADMIN_ITEM} from './constants.js'
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
 
 let actionItemFetchData = () => {
   return {
@@ -77,15 +73,9 @@ let actionUndoItem = () => {
   };
 }
 
-<<<<<<< HEAD
 let actionUndoAdminItem = () => {
   return{
     type: UNDO_ADMIN
-=======
-let actionUndoSum = () => {
-  return{
-  type: UNDO_SUM,
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
   };
 }
 
@@ -100,7 +90,6 @@ let actionAddAdminItem = (itemName, price, productImg, removeName, stock) => {
   }
 }
 
-<<<<<<< HEAD
 let actionRedoItem = () => {
 	return {
 		type: REDO_ITEM
@@ -134,6 +123,3 @@ let actionRedoRemovedItem = () => {
 export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart,
         actionUpdateQuantity, actionUndoItem, actionHistoryAdd, actionLogin,
         actionAddAdminItem, actionUndoAdminItem, actionRedoItem, actionAddRemovedItem, actionUndoRemovedItem, actionRedoRemovedItem};
-=======
-export { actionItemFetchData, actionFetchFailed, actionFetchGotData, actionAddItem, actionDisplayCart, actionUpdateQuantity, actionTotalSum, actionUndoItem, actionUndoSum, actionHistoryAdd, actionLogin, actionAddAdminItem};
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88

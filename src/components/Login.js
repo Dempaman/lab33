@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import {actionLogin} from '../actions/actions.js';
-=======
 
 import {actionLogin, actionHistoryAdd} from '../actions/actions.js';
->>>>>>> f0fbd026e9fddd4f90edb9c41922f43586cf5d88
 import {connect} from 'react-redux';
 import { auth, provider } from './firebase.js';
 import './Login.css';
